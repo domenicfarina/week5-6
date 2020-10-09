@@ -1,0 +1,116 @@
+<html>
+	<head>
+	<title>Adventure Time</title>
+	</head>
+	
+	<body>
+		<h1>Adventure Time</h1>
+		<button id= "attackButton">Attack</button>
+		<button id= "potionButton">Drink Potion</button>
+		<p>Hero Name: <span id="heroName"></span></p>
+		<p>Heros HP: <span id="heroHP"></span> </p>	
+		<p>Enemy Name: <span id="enemyName"></span> </p>	
+		<p>Enemy HP: <span id="enemyHP"></span> </p>
+
+		<img src="" id="monster_image" />
+	
+		<script src="human.js"></script>
+		<script src="monster.js"></script>
+		<script src="items.js"></script>
+		
+		<script>
+			var monster_image = document.getElementById("monster_image")
+		
+		
+			function updateMonsterImage(monster_index) {
+				monster_image.src = images[monster_index].image
+			}
+		
+			var images = [
+				{
+					name: "Ice Wizard",
+					image: "https://pyxis.nymag.com/v1/imgs/26d/311/5d77f80ae9cb39ad03ecbcfc57faf60472-31-ice-king.rhorizontal.w700.jpg",
+				
+				},
+				{
+					name: "Vampire Queen",
+					image: "https://upload.wikimedia.org/wikipedia/en/4/48/Adventure_Time_-_Marceline.png",
+				
+				},
+				{
+					name: "Jake The Dog",
+					image: "https://vignette.wikia.nocookie.net/adventuretimewithfinnandjake/images/b/b6/Demon_Jake.png/revision/latest/scale-to-width-down/340?cb=20120916223121",
+				
+				}
+			]
+		
+		
+		
+		
+		var attackButton = document.getElementById("attackButton");
+		attackButton.addEventListener("click", skirmish);
+		var potionButton = document.getElementById("potionButton")
+		potionButton.addEventListener("click", potion)
+		var heroName = document.getElementById("heroName");
+		var heroHP = document.getElementById("heroHP");
+		var enemyName = document.getElementById("enemyName");
+		var enemyHP = document.getElementById("enemyHP");
+		var num_potion = 1;
+		console.log(human);			
+			var game = {
+				user: human,
+				monsters: mobs,	
+				current_enemy: {},
+			}
+			var current_enemy_index = generateRandomNumber(game.monsters.length);
+   				console.log(current_enemy_index);
+			var current_enemy = game.monsters[current_enemy_index];
+				console.log(current_enemy);
+				game.current_enemy = current_enemy;
+		function generateRandomNumber(maxNumber){
+		return Math.floor( Math.random() * maxNumber );
+		}
+		
+		function skirmish(){
+			game.current_enemy.hp = game.current_enemy.hp - game.user.damage;
+			game.user.hp = game.user.hp - game.current_enemy.damage;
+			console.log(game);
+			
+			if (game.user.hp <= 0){
+				alert("You were slain by the beast! Your journey has abruptly ended.")
+			}
+			else if(game.current_enemy.hp <=0){
+				alert("You have slain the beast! You live to see another day.")
+				testDropSystem();
+			}
+			else{
+				alert("Your attacks connect, yet both you and the beast still stand. The Battle rages on!")
+			}
+			heroName.innerText = game.user.name;
+			heroHP.innerText = game.user.hp;
+			enemyName.innerText = game.current_enemy.name;
+			enemyHP.innerText = game.current_enemy.hp;
+		}
+		function potion(){
+			if(num_potion == 1){
+				
+				game.user.hp = game.user.hp + 10;
+				num_potion--;
+
+			}
+
+			 else if(num_potion <=0){
+				
+				alert("You backpack must have a hole because you dont have any more potions with you!");
+			}
+		}
+		
+		updateMonsterImage(current_enemy_index);
+		
+	</script>
+		
+
+	</p>
+</p>
+	</body>
+</html>
